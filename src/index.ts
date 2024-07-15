@@ -3,6 +3,7 @@ import type { SendSmsResponse, SmsMessage } from "./types/sms";
 import type {
   GetRechargePackagesResponse,
   PurchasePackageResponse,
+  ViewAccountDetailsResponse,
 } from "./types/account";
 
 type ClickSendApiAuth = {
@@ -19,6 +20,7 @@ export const createClickSendApi = (config: ClickSendApiAuth) => {
       "Content-Type": "application/json",
     },
   });
+
   const api = {
     account: {
       recharge: {
@@ -33,6 +35,13 @@ export const createClickSendApi = (config: ClickSendApiAuth) => {
           const res = await clickSendApi.put<PurchasePackageResponse>(
             `recharge/purchase/${packageId}`
           );
+          return res.data;
+        },
+      },
+      management: {
+        viewAccountDetails: async () => {
+          const res =
+            await clickSendApi.get<ViewAccountDetailsResponse>("account");
           return res.data;
         },
       },
