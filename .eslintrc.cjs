@@ -4,6 +4,9 @@ const project = resolve(process.cwd(), "tsconfig.json");
 
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
+  parserOptions: {
+    project: true,
+  },
   extends: [
     "prettier",
     "plugin:@typescript-eslint/recommended-type-checked",

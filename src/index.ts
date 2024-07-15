@@ -1,6 +1,9 @@
 import axios from "axios";
 import type { SendSmsResponse, SmsMessage } from "./types/sms";
-import type { GetRechargePackagesResponse, PurchasePackageResponse } from "./types/account";
+import type {
+  GetRechargePackagesResponse,
+  PurchasePackageResponse,
+} from "./types/account";
 
 type ClickSendApiAuth = {
   username: string;
@@ -20,11 +23,16 @@ export const createClickSendApi = (config: ClickSendApiAuth) => {
     account: {
       recharge: {
         getPackages: async () => {
-          const res = await clickSendApi.get<GetRechargePackagesResponse>("recharge/packages");
+          const res =
+            await clickSendApi.get<GetRechargePackagesResponse>(
+              "recharge/packages"
+            );
           return res.data;
         },
         purchasePackage: async (packageId: number) => {
-          const res = await clickSendApi.put<PurchasePackageResponse>(`recharge/purchase/${packageId}`);
+          const res = await clickSendApi.put<PurchasePackageResponse>(
+            `recharge/purchase/${packageId}`
+          );
           return res.data;
         },
       },
