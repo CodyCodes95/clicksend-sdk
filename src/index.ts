@@ -73,10 +73,6 @@ export const createClickSendApi = (config: ClickSendApiAuth) => {
       );
       return res.data;
     },
-    getInboundMessages: async () => {
-      const res = await clickSendApi.get<unknown>("sms/inbound");
-      return res.data;
-    },
   };
   return api;
 };
