@@ -1,5 +1,9 @@
 import axios from "axios";
-import type { SendSmsResponse, SmsMessage } from "./types/sms";
+import type {
+  CalculateSmsPriceResponse,
+  SendSmsResponse,
+  SmsMessage,
+} from "./types/sms";
 import type {
   GetRechargePackagesResponse,
   PurchasePackageResponse,
@@ -56,6 +60,18 @@ export const createClickSendApi = (config: ClickSendApiAuth) => {
         });
         return res.data;
       },
+    },
+    calculateSmsPrice: async (messages: SmsMessage[]) => {
+      const res = await clickSendApi.post<CalculateSmsPriceResponse>(
+        "sms/price",
+        {
+          messages: messages.map((message) => ({
+            ...message,
+            source: "sdk",
+          })),
+        }
+      );
+      return res.data;
     },
   };
   return api;
