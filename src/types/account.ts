@@ -1,4 +1,4 @@
-import type { ClickSendApiResponse } from ".";
+import type { ClickSendApiResponse, ClickSendPagedResponse } from ".";
 
 export type GetRechargePackagesResponse = ClickSendApiResponse<{
   packages: {
@@ -100,3 +100,33 @@ export type ViewAccountDetailsResponse = ClickSendApiResponse<{
     notes: null;
   };
 }>;
+
+export type AlphaTagsResponse = {
+  alpha_tags: {
+    id: string;
+    account_id: string;
+    workspace_id: string;
+    user_id: string;
+    alpha_tag: string;
+    status: string;
+    reason: string;
+    created_timestamp: string;
+    updated_timestamp: string;
+  }[];
+  _metadata: {
+    pagination: {
+      self: string;
+      next: string;
+      page_size: number;
+    };
+  };
+};
+
+export type SenderNumbersResponse = ClickSendApiResponse<
+  ClickSendPagedResponse<{
+    dedicated_number: string;
+    country: string;
+    price: string;
+    _country_name: string;
+  }>
+>;

@@ -1,14 +1,16 @@
-import axios from "axios";
 import type {
   CalculateSmsPriceResponse,
   SendSmsResponse,
   SmsMessage,
 } from "./types/sms";
 import type {
+  AlphaTagsResponse,
   GetRechargePackagesResponse,
   PurchasePackageResponse,
+  SenderNumbersResponse,
   ViewAccountDetailsResponse,
 } from "./types/account";
+import ky from "ky";
 
 type ClickSendApiAuth = {
   username: string;
@@ -17,61 +19,87 @@ type ClickSendApiAuth = {
 
 export const createClickSendApi = (config: ClickSendApiAuth) => {
   const authenticationString = `Basic ${btoa(`${config.username}:${config.apiKey}`)}`;
-  const clickSendApi = axios.create({
-    baseURL: "https://rest.clicksend.com/v3/",
+  const clickSendApi = ky.create({
+    prefixUrl: "https://rest.clicksend.com/v3/",
     headers: {
       Authorization: authenticationString,
       "Content-Type": "application/json",
     },
   });
-
   const api = {
     account: {
+      sender: {
+        numbers: {
+          list: async () => {
+            const data = await clickSendApi
+              .get<SenderNumbersResponse>("numbers")
+              .json();
+            return data;
+          },
+        },
+        alphaTags: {
+          list: async () => {
+            const data = await clickSendApi
+              .get<AlphaTagsResponse>("alpha-tags")
+              .json();
+            return data;
+          },
+        },
+      },
       recharge: {
         getPackages: async () => {
           const res =
             await clickSendApi.get<GetRechargePackagesResponse>(
               "recharge/packages"
             );
-          return res.data;
+          const data = await res.json();
+          return data;
         },
         purchasePackage: async (packageId: number) => {
           const res = await clickSendApi.put<PurchasePackageResponse>(
             `recharge/purchase/${packageId}`
           );
-          return res.data;
+          const data = await res.json();
+          return data;
         },
       },
       management: {
         viewAccountDetails: async () => {
           const res =
             await clickSendApi.get<ViewAccountDetailsResponse>("account");
-          return res.data;
+          const data = await res.json();
+          return data;
         },
       },
     },
     sms: {
       sendMessages: async (messages: SmsMessage[]) => {
         const res = await clickSendApi.post<SendSmsResponse>("sms/send", {
-          messages: messages.map((message) => ({
-            ...message,
-            source: "sdk",
-          })),
+          json: {
+            messages: messages.map((message) => ({
+              ...message,
+              source: "sdk",
+            })),
+          },
         });
-        return res.data;
+        const data = await res.json();
+        return data;
       },
     },
     calculateSmsPrice: async (messages: SmsMessage[]) => {
       const res = await clickSendApi.post<CalculateSmsPriceResponse>(
         "sms/price",
         {
-          messages: messages.map((message) => ({
-            ...message,
-            source: "sdk",
-          })),
+          json: {
+            messages: messages.map((message) => ({
+              ...message,
+              source: "sdk",
+            })),
+          },
         }
       );
-      return res.data;
+      const data = await res.json();
+      return data;
     },
   };
   return api;
