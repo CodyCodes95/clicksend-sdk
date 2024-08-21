@@ -1,6 +1,6 @@
 {
   "name": "@codythatsme/clicksend-sdk",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "scripts": {
     "dev": "bun src/index.ts",
     "bump": "npm version patch --no-git-tag-version",

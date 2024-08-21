@@ -1,6 +1,7 @@
 import type { ClickSendApiResponse } from ".";
 
 export type SmsMessage = {
+  from: string | null;
   to: string;
   body: string;
   custom_string?: string;
