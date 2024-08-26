@@ -7,7 +7,7 @@ export type SmsMessage = {
   custom_string?: string;
 };
 
-type ClickSendMessageResponse = {
+export type ClickSendMessageResponse = {
   direction: string;
   date: number;
   to: string;

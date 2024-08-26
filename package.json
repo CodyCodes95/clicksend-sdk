@@ -1,19 +1,30 @@
 {
   "name": "@codythatsme/clicksend-sdk",
-  "version": "1.0.9",
+  "version": "1.1.1",
+  "type": "module",
   "scripts": {
     "dev": "bun src/index.ts",
     "bump": "npm version patch --no-git-tag-version",
-    "build": "tsc && tsup src/index.ts --format cjs,esm --dts --target esnext",
+    "build": "tsc && tsup",
     "lint": "eslint src --ext .ts,.tsx",
     "format": "prettier --write src",
     "prepublish": "npm run bump && bun run build",
     "publish": "npm publish --access public",
     "postpublish": "rm -rf dist"
   },
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "exports": {
+    "import": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "require": {
+      "types": "./dist/index.d.cts",
+      "default": "./dist/index.cjs"
+    }
+  },
   "files": [
     "dist"
   ],
