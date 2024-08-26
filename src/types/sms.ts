@@ -1,4 +1,4 @@
-import type { ClickSendApiResponse } from ".";
+import type { ClickSendApiResponse } from "./utils";
 
 export type SmsMessage = {
   from: string | null;

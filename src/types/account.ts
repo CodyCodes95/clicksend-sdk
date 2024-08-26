@@ -1,4 +1,4 @@
-import type { ClickSendApiResponse, ClickSendPagedResponse } from ".";
+import type { ClickSendApiResponse, ClickSendPagedResponse } from "./utils";
 
 export type GetRechargePackagesResponse = ClickSendApiResponse<{
   packages: {
