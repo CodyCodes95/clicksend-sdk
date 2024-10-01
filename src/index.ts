@@ -2,14 +2,12 @@ import type {
   CalculateSmsPriceResponse,
   SendSmsResponse,
   SmsMessage,
-} from "./types/sms";
-import type {
   AlphaTagsResponse,
   GetRechargePackagesResponse,
   PurchasePackageResponse,
   SenderNumbersResponse,
   ViewAccountDetailsResponse,
-} from "./types/account";
+} from "./types";
 import ky from "ky";
 
 type ClickSendApiAuth = {
