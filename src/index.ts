@@ -71,6 +71,21 @@ export const createClickSendApi = (config: ClickSendApiAuth) => {
       },
     },
     sms: {
+      calculateSmsPrice: async (messages: SmsMessage[]) => {
+        const res = await clickSendApi.post<CalculateSmsPriceResponse>(
+          "sms/price",
+          {
+            json: {
+              messages: messages.map((message) => ({
+                ...message,
+                source: "sdk",
+              })),
+            },
+          }
+        );
+        const data = await res.json();
+        return data;
+      },
       sendMessages: async (messages: SmsMessage[]) => {
         const res = await clickSendApi.post<SendSmsResponse>("sms/send", {
           json: {
@@ -83,21 +98,6 @@ export const createClickSendApi = (config: ClickSendApiAuth) => {
         const data = await res.json();
         return data;
       },
-    },
-    calculateSmsPrice: async (messages: SmsMessage[]) => {
-      const res = await clickSendApi.post<CalculateSmsPriceResponse>(
-        "sms/price",
-        {
-          json: {
-            messages: messages.map((message) => ({
-              ...message,
-              source: "sdk",
-            })),
-          },
-        }
-      );
-      const data = await res.json();
-      return data;
     },
   };
   return api;
