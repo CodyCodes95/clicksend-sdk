@@ -7,6 +7,7 @@ import type {
   PurchasePackageResponse,
   SenderNumbersResponse,
   ViewAccountDetailsResponse,
+  ViewClientAccountsResponse,
 } from "./types";
 import ky from "ky";
 
@@ -65,6 +66,16 @@ export const createClickSendApi = (config: ClickSendApiAuth) => {
         viewAccountDetails: async () => {
           const res =
             await clickSendApi.get<ViewAccountDetailsResponse>("account");
+          const data = await res.json();
+          return data;
+        },
+      },
+      reseller: {
+        viewClientAccounts: async () => {
+          const res =
+            await clickSendApi.get<ViewClientAccountsResponse>(
+              "reseller/accounts"
+            );
           const data = await res.json();
           return data;
         },
