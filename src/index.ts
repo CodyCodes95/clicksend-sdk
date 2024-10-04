@@ -8,6 +8,7 @@ import type {
   SenderNumbersResponse,
   ViewAccountDetailsResponse,
   ViewClientAccountsResponse,
+  PaginationOptions,
 } from "./types";
 import ky from "ky";
 
@@ -71,11 +72,17 @@ export const createClickSendApi = (config: ClickSendApiAuth) => {
         },
       },
       reseller: {
-        viewClientAccounts: async () => {
-          const res =
-            await clickSendApi.get<ViewClientAccountsResponse>(
-              "reseller/accounts"
-            );
+        viewClientAccounts: async (options?: PaginationOptions) => {
+          const params = new URLSearchParams();
+          if (options?.page) {
+            params.append("page", options.page.toString());
+          }
+          if (options?.limit) {
+            params.append("limit", options.limit.toString());
+          }
+          const res = await clickSendApi.get<ViewClientAccountsResponse>(
+            `reseller/accounts?${params.toString()}`
+          );
           const data = await res.json();
           return data;
         },
