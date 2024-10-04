@@ -131,34 +131,38 @@ export type SenderNumbersResponse = ClickSendApiResponse<
   }>
 >;
 
+type ClicksendAccount = {
+  user_id: number;
+  username: string;
+  user_email: string;
+  active: number;
+  banned: number;
+  balance: string;
+  user_phone: number;
+  reply_to: string;
+  delivery_to: null;
+  user_first_name: string;
+  user_last_name: string;
+  account: number;
+  account_name: string;
+  account_billing_email: string;
+  account_billing_mobile: number;
+  country: string;
+  default_country_sms: string;
+  auto_recharge: number;
+  auto_recharge_amount: string;
+  low_credit_amount: string;
+  setting_unicode_sms: number;
+  setting_email_sms_subject: number;
+  setting_fix_sender_id: number;
+  setting_sms_message_char_limit: number;
+  old_dashboard: number;
+  balance_commission: string;
+  timezone: string;
+};
+
 export type ViewClientAccountsResponse = ClickSendApiResponse<
-  ClickSendPagedResponse<{
-    user_id: number;
-    username: string;
-    user_email: string;
-    active: number;
-    banned: number;
-    balance: string;
-    user_phone: number;
-    reply_to: string;
-    delivery_to: null;
-    user_first_name: string;
-    user_last_name: string;
-    account: number;
-    account_name: string;
-    account_billing_email: string;
-    account_billing_mobile: number;
-    country: string;
-    default_country_sms: string;
-    auto_recharge: number;
-    auto_recharge_amount: string;
-    low_credit_amount: string;
-    setting_unicode_sms: number;
-    setting_email_sms_subject: number;
-    setting_fix_sender_id: number;
-    setting_sms_message_char_limit: number;
-    old_dashboard: number;
-    balance_commission: string;
-    timezone: string;
-  }>
+  ClickSendPagedResponse<ClicksendAccount>
 >;
+
+export type TransferCreditResponse = ClickSendApiResponse<ClicksendAccount>;

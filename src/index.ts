@@ -9,6 +9,8 @@ import type {
   ViewAccountDetailsResponse,
   ViewClientAccountsResponse,
   PaginationOptions,
+  TransferCreditOptions,
+  TransferCreditResponse,
 } from "./types";
 import ky from "ky";
 
@@ -82,6 +84,20 @@ export const createClickSendApi = (config: ClickSendApiAuth) => {
           }
           const res = await clickSendApi.get<ViewClientAccountsResponse>(
             `reseller/accounts?${params.toString()}`
+          );
+          const data = await res.json();
+          return data;
+        },
+        transferCredit: async (options: TransferCreditOptions) => {
+          const res = await clickSendApi.put<TransferCreditResponse>(
+            "reseller/transfer-credit",
+            {
+              body: new URLSearchParams({
+                client_user_id: options.client_user_id.toString(),
+                balance: options.balance.toString(),
+                currency: options.currency,
+              }),
+            }
           );
           const data = await res.json();
           return data;
