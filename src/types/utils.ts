@@ -1,4 +1,3 @@
-
 export type ClickSendApiResponse<T> = {
   http_code: number;
   response_code: string;
@@ -15,5 +14,5 @@ export type ClickSendPagedResponse<T> = {
   prev_page_url: null;
   from: number;
   to: number;
-  data: T[];
+  data?: T[];
 };
