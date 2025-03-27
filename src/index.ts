@@ -46,6 +46,18 @@ export const createClickSendApi = (config: ClickSendApiAuth) => {
               .json();
             return data;
           },
+          register: async (
+            alphaTag: string,
+            options?: {
+              reason?: string;
+            }
+          ) => {
+            const res = await clickSendApi.post<unknown>("alpha-tags", {
+              json: { alpha_tag: alphaTag, ...options },
+            });
+            const data = await res.json();
+            return data;
+          },
         },
       },
       recharge: {
